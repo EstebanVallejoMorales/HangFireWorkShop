@@ -18,54 +18,54 @@ public class ReservationService : IReservationService
 
     public void CreateReservation(int flightId, string passengerName)
     {
-        _logger.LogInformation($"[CreateReservation] inicio: {passengerName} flight:{flightId}");
+        _logger.LogInformation($"[CreateReservation] Starting: PassengerName: {passengerName}, Flight:{flightId}");
         var reservation = new Reservation { FlightId = flightId, PassengerName = passengerName, Status = "Pending" };
         _db.Reservations.Add(reservation);
         _db.SaveChanges();
-        Console.WriteLine($"[CreateReservation] Reserva creada Id={reservation.Id}");
-        _logger.LogInformation($"[CreateReservation] creada Id={reservation.Id}");
+        Console.WriteLine($"[CreateReservation] Reservation created: Id={reservation.Id}");
+        _logger.LogInformation($"[CreateReservation] Created Id={reservation.Id}");
     }
 
     public void ConfirmReservation(int reservationId)
     {
-        Console.WriteLine($"[ConfirmReservation] intentando {reservationId}");
+        Console.WriteLine($"[ConfirmReservation] Trying {reservationId}");
         var reservation = _db.Reservations.Find(reservationId);
-        if (reservation == null) { Console.WriteLine($"[ConfirmReservation] Reservation {reservationId} no encontrada"); return; }
+        if (reservation == null) { Console.WriteLine($"[ConfirmReservation] Reservation {reservationId} not found"); return; }
         reservation.Status = "Confirmed";
         _db.SaveChanges();
-        Console.WriteLine($"[ConfirmReservation] Confirmada {reservationId}");
+        Console.WriteLine($"[ConfirmReservation] Confirmed {reservationId}");
     }
 
     public void SendReminder(int reservationId)
     {
-        Console.WriteLine($"[SendReminder] Recordatorio para reservation {reservationId}");
-        // Simular notificación
+        // Simulate notification
+        Console.WriteLine($"[SendReminder] Reservation Reminder {reservationId}");
     }
 
     public void GenerateDailySummary()
     {
         var count = _db.Reservations.Count();
-        Console.WriteLine($"[GenerateDailySummary] Total reservas en BD: {count}");
+        Console.WriteLine($"[GenerateDailySummary] Total reservations in DB: {count}");
     }
 
     public void ProcessPayment(int reservationId)
     {
-        Console.WriteLine($"[ProcessPayment] Procesando pago {reservationId} (simulado)...");
-        System.Threading.Thread.Sleep(2000); // simula trabajo
-        var r = _db.Reservations.Find(reservationId);
-        if (r == null) { Console.WriteLine($"[ProcessPayment] no existe {reservationId}"); return; }
-        r.Status = "Paid";
+        Console.WriteLine($"[ProcessPayment] Processing payment {reservationId} (simulated)...");
+        System.Threading.Thread.Sleep(2000); // simulates work
+        var reservation = _db.Reservations.Find(reservationId);
+        if (reservation == null) { Console.WriteLine($"[ProcessPayment] does not exist {reservationId}"); return; }
+        reservation.Status = "Paid";
         _db.SaveChanges();
-        Console.WriteLine($"[ProcessPayment] Pago completado {reservationId}");
+        Console.WriteLine($"[ProcessPayment] Payment completed {reservationId}");
     }
 
     public void SendTicket(int reservationId)
     {
-        Console.WriteLine($"[SendTicket] Enviando ticket {reservationId} (simulado)...");
-        var r = _db.Reservations.Find(reservationId);
-        if (r == null) { Console.WriteLine($"[SendTicket] no existe {reservationId}"); return; }
-        r.Status = "TicketSent";
+        Console.WriteLine($"[SendTicket] Sending ticket {reservationId} (simulated)...");
+        var reservation = _db.Reservations.Find(reservationId);
+        if (reservation == null) { Console.WriteLine($"[SendTicket] does not exist {reservationId}"); return; }
+        reservation.Status = "TicketSent";
         _db.SaveChanges();
-        Console.WriteLine($"[SendTicket] Ticket enviado {reservationId}");
+        Console.WriteLine($"[SendTicket] Ticket sent {reservationId}");
     }
 }

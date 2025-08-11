@@ -36,9 +36,9 @@ namespace HangFireWorkShop
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true
                 }));
-            builder.Services.AddScoped<IReservationService, ReservationService>();
-
             builder.Services.AddHangfireServer();
+            
+            builder.Services.AddScoped<IReservationService, ReservationService>();
 
             var app = builder.Build();
 
@@ -47,14 +47,9 @@ namespace HangFireWorkShop
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-            }
-
-            // Automatically apply migrations on startup
-            using (var scope = app.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                db.Database.EnsureCreated();
-                DbInitializer.Seed(db);
+                // Initialize the database with sample data
+                dbContext.Database.EnsureCreated();
+                DbInitializer.Seed(dbContext);
             }
 
             // Configure the HTTP request pipeline.
@@ -70,7 +65,8 @@ namespace HangFireWorkShop
 
             app.UseHangfireDashboard();
 
-            RecurringJob.AddOrUpdate<IReservationService>("daily-summary", svc => svc.GenerateDailySummary(), Cron.Minutely);
+            RecurringJob.AddOrUpdate<IReservationService>("daily-summary", 
+                svc => svc.GenerateDailySummary(), Cron.Minutely);
 
             app.MapControllers();
 
