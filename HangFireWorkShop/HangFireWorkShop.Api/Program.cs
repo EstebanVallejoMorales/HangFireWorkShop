@@ -36,6 +36,8 @@ namespace HangFireWorkShop
                     DisableGlobalLocks = true
                 }));
 
+            builder.Services.AddHangfireServer();
+
             var app = builder.Build();
 
             // Automatically apply migrations on startup
@@ -56,6 +58,7 @@ namespace HangFireWorkShop
 
             app.UseAuthorization();
 
+            app.UseHangfireDashboard();
 
             app.MapControllers();
 
