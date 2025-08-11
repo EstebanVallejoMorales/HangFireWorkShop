@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFireWorkShop.Data", "Ha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFireWorkShop.Models", "HangFireWorkShop.Models\HangFireWorkShop.Models.csproj", "{678E2970-F0B0-42A3-A89E-61D4036EC730}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangFireWorkShop.Domain", "HangFireWorkShop.Domain\HangFireWorkShop.Domain.csproj", "{C16ECBB9-7898-4DC6-8D7C-C269D0130D61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{678E2970-F0B0-42A3-A89E-61D4036EC730}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{678E2970-F0B0-42A3-A89E-61D4036EC730}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{678E2970-F0B0-42A3-A89E-61D4036EC730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16ECBB9-7898-4DC6-8D7C-C269D0130D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16ECBB9-7898-4DC6-8D7C-C269D0130D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16ECBB9-7898-4DC6-8D7C-C269D0130D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16ECBB9-7898-4DC6-8D7C-C269D0130D61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

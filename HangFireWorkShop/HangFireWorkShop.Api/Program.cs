@@ -2,6 +2,7 @@
 using Hangfire;
 using Hangfire.SqlServer;
 using HangFireWorkShop.Data;
+using HangFireWorkShop.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -35,6 +36,7 @@ namespace HangFireWorkShop
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true
                 }));
+            builder.Services.AddScoped<IReservationService, ReservationService>();
 
             builder.Services.AddHangfireServer();
 
@@ -45,6 +47,14 @@ namespace HangFireWorkShop
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
+            }
+
+            // Automatically apply migrations on startup
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                db.Database.EnsureCreated();
+                DbInitializer.Seed(db);
             }
 
             // Configure the HTTP request pipeline.
@@ -59,6 +69,8 @@ namespace HangFireWorkShop
             app.UseAuthorization();
 
             app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<IReservationService>("daily-summary", svc => svc.GenerateDailySummary(), Cron.Minutely);
 
             app.MapControllers();
 

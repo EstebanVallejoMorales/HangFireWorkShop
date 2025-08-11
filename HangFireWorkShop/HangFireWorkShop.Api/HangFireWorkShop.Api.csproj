@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HangFireWorkShop.Data\HangFireWorkShop.Data.csproj" />
+    <ProjectReference Include="..\HangFireWorkShop.Domain\HangFireWorkShop.Domain.csproj" />
   </ItemGroup>
 
 </Project>
